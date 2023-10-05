@@ -30,7 +30,8 @@ public class SellerDaoJDBC implements SellerDAO {
 	public void insert(Seller obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("INSERT INTO seller "
+			st = conn.prepareStatement(
+					"INSERT INTO seller "
 					+ "(Name, Email, BirthDate, BaseSalary, DepartmentId)  "
 					+ "VALUES  "
 					+ "(?, ?, ?, ?, ?) ",
@@ -66,7 +67,8 @@ public class SellerDaoJDBC implements SellerDAO {
 	public void update(Seller obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE seller \r\n"
+			st = conn.prepareStatement(
+					"UPDATE seller \r\n"
 					+ "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ?  "
 					+ "WHERE Id = ?"
 				     );
@@ -91,7 +93,25 @@ public class SellerDaoJDBC implements SellerDAO {
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM seller WHERE Id = ? ");
+			
+			st.setInt(1, id);
+		 
+		   int rows = st.executeUpdate();
+		   
+		   if(rows == 0 ) {
+			   throw new  DbException(" Non-existent id");
+		   }
+			
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+	
+		}
+
 
 	}
 
