@@ -45,8 +45,8 @@ public class SellerDaoJDBC implements SellerDAO {
 		 
 			int rows = st.executeUpdate();
 			
-			if (rows>0) {
-				ResultSet rs =st.getGeneratedKeys();
+			if (rows > 0) {
+				ResultSet rs = st.getGeneratedKeys();
 				if(rs.next()) {
 					int id = rs.getInt(1);
 					obj.setId(id);
@@ -68,7 +68,7 @@ public class SellerDaoJDBC implements SellerDAO {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"UPDATE seller \r\n"
+					"UPDATE seller "
 					+ "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ?  "
 					+ "WHERE Id = ?"
 				     );
